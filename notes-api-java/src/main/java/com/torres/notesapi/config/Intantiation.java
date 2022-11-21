@@ -19,9 +19,7 @@ public class Intantiation implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		userRepository.deleteAll();
-		
 		User user1 =  new User(null, "Pablo", "pablo@gmail.com");
-		
 		userRepository.saveAll(Arrays.asList(user1));
 		
 	}
