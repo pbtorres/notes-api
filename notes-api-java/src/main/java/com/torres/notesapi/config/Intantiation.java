@@ -8,8 +8,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.torres.notesapi.dto.AuthorDTO;
+import com.torres.notesapi.entities.Category;
 import com.torres.notesapi.entities.Note;
 import com.torres.notesapi.entities.User;
+import com.torres.notesapi.repository.CategoryRepository;
 import com.torres.notesapi.repository.NoteRepository;
 import com.torres.notesapi.repository.UserRepository;
 
@@ -22,14 +24,21 @@ public class Intantiation implements CommandLineRunner {
 	@Autowired
 	private NoteRepository noteRepository;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 
 		noteRepository.deleteAll();
 		userRepository.deleteAll();
+		categoryRepository.deleteAll();
 		
 		User user1 =  new User(null, "Pablo", "pablo@gmail.com");
 		userRepository.saveAll(Arrays.asList(user1));
+		
+		Category cat1 = new Category(null, "Gastos", new AuthorDTO(user1));
+		categoryRepository.saveAll(Arrays.asList(cat1));
 		
 		Note note1 = new Note(null, "Teste 1", "Essa é uma nota teste", new Date(), new AuthorDTO(user1));
 		noteRepository.saveAll(Arrays.asList(note1));

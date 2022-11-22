@@ -1,66 +1,62 @@
 package com.torres.notesapi.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "user")
-public class User implements Serializable {
+import com.torres.notesapi.dto.AuthorDTO;
+
+@Document(collection="category")
+public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String id;
 	private String name;
-	private String email;
 	
-	private List<Note> notes = new ArrayList<>();
+	private AuthorDTO author;
 	
-	public User() {
+	public Category() {
 		
 	}
 	
-	public User(String id, String name, String email) {
+	public Category(String id, String name, AuthorDTO author) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.email = email;
+		this.author = author;
 	}
 
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	
-	public List<Note> getNotes() {
-		return notes;
+	public AuthorDTO getAuthor() {
+		return author;
 	}
 
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
+	public void setAuthor(AuthorDTO author) {
+		this.author = author;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(id, name);
 	}
 
 	@Override
@@ -71,8 +67,8 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
-		return Objects.equals(id, other.id);
+		Category other = (Category) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
-
+	
 }
