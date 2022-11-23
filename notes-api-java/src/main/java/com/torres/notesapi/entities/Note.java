@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.torres.notesapi.dto.AuthorDTO;
+import com.torres.notesapi.dto.CategoryDTO;
 
 @Document(collection="note")
 public class Note implements Serializable {
@@ -20,18 +21,20 @@ public class Note implements Serializable {
 	private String text;
 	private Date created_at;
 	
+	private CategoryDTO category;
 	private AuthorDTO author;
 	
 	public Note() {
 		
 	}
 
-	public Note(String id, String title, String text, Date created_at, AuthorDTO author) {
+	public Note(String id, String title, String text, Date created_at,CategoryDTO category, AuthorDTO author) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.text = text;
 		this.created_at = created_at;
+		this.category = category;
 		this.author = author;
 	}
 
@@ -65,6 +68,14 @@ public class Note implements Serializable {
 
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
+	}
+	
+	public CategoryDTO getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryDTO category) {
+		this.category = category;
 	}
 
 	public AuthorDTO getAuthor() {

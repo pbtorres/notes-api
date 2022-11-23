@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.torres.notesapi.dto.AuthorDTO;
+import com.torres.notesapi.dto.CategoryDTO;
 import com.torres.notesapi.entities.Category;
 import com.torres.notesapi.entities.Note;
 import com.torres.notesapi.entities.User;
@@ -40,10 +41,11 @@ public class Intantiation implements CommandLineRunner {
 		Category cat1 = new Category(null, "Gastos", new AuthorDTO(user1));
 		categoryRepository.saveAll(Arrays.asList(cat1));
 		
-		Note note1 = new Note(null, "Teste 1", "Essa é uma nota teste", new Date(), new AuthorDTO(user1));
+		Note note1 = new Note(null, "Teste 1", "Essa é uma nota teste", new Date(), new CategoryDTO(cat1), new AuthorDTO(user1));
 		noteRepository.saveAll(Arrays.asList(note1));
 		
 		user1.getNotes().add(note1);
+		user1.getCategories().add(cat1);
 		userRepository.saveAll(Arrays.asList(user1));
 
 	}

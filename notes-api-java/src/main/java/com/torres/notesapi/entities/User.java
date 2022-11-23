@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	
+	private List<Category> categories = new ArrayList<>();
 	private List<Note> notes = new ArrayList<>();
 	
 	public User() {
@@ -48,6 +49,14 @@ public class User implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 	
 	public List<Note> getNotes() {
