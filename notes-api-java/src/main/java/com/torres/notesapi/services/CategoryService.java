@@ -1,12 +1,14 @@
 package com.torres.notesapi.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.torres.notesapi.entities.Category;
 import com.torres.notesapi.repository.CategoryRepository;
+import com.torres.notesapi.services.exception.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -16,6 +18,11 @@ public class CategoryService {
 	
 	public List<Category> findAll() {
 		return repo.findAll();
+	}
+	
+	public Category findById(String id) {
+		Optional<Category> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
 	}
 
 }
