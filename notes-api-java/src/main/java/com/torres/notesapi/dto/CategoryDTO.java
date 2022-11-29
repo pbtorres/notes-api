@@ -11,6 +11,8 @@ public class CategoryDTO implements Serializable {
 	private String id;
 	private String name;
 	
+	private AuthorDTO author;
+	
 	public CategoryDTO() {
 		
 	}
@@ -18,6 +20,7 @@ public class CategoryDTO implements Serializable {
 	public CategoryDTO(Category category) {
 		this.id = category.getId();
 		this.name = category.getName();
+		this.author = category.getAuthor();
 	}
 
 	public String getId() {
@@ -34,6 +37,14 @@ public class CategoryDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public AuthorDTO getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(AuthorDTO author) {
+		this.author = author;
 	}
 	
 }
