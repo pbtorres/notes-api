@@ -36,6 +36,11 @@ public class CategoryService {
 		return repo.save(newObj);
 	}
 	
+	public void deleteById(String id) {
+		findById(id);
+		repo.deleteById(id);
+	}
+	
 	public void updateData(Category newObj, Category obj) {
 		newObj.setName(obj.getName());
 	}
