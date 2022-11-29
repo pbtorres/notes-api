@@ -30,6 +30,16 @@ public class CategoryService {
 		return repo.insert(obj);
 	}
 	
+	public Category update(Category obj) {
+		Category newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
+	public void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
+	}
+	
 	public Category fromDTO(CategoryDTO objDTO) {
 		return new Category(objDTO.getId(), objDTO.getName(), objDTO.getAuthor());
 	}
