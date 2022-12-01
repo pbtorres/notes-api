@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.torres.notesapi.dto.CategoryDTO;
 import com.torres.notesapi.dto.NoteDTO;
 import com.torres.notesapi.dto.UserDTO;
 import com.torres.notesapi.entities.User;
@@ -43,6 +44,16 @@ public class UserResource {
 		list = obj.getNotes()
 				.stream()
 				.map(x -> new NoteDTO(x, x.getCategory(), x.getAuthor())).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value="/{id}/categories")
+	public ResponseEntity<List<CategoryDTO>> findCategories(@PathVariable String id) {
+		User obj = service.findById(id);
+		List<CategoryDTO> list = new ArrayList<>();
+		list = obj.getCategories()
+				.stream()
+				.map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(list);
 	}
 	
