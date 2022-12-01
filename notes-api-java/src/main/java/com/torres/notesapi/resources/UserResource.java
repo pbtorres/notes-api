@@ -1,5 +1,6 @@
 package com.torres.notesapi.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.torres.notesapi.dto.NoteDTO;
 import com.torres.notesapi.dto.UserDTO;
 import com.torres.notesapi.entities.User;
 import com.torres.notesapi.services.UserService;
@@ -29,9 +31,19 @@ public class UserResource {
 	}
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<UserDTO> findBid(@PathVariable String id) {
+	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
+	}
+	
+	@GetMapping(value="/{id}/notes")
+	public ResponseEntity<List<NoteDTO>> findNotes(@PathVariable String id) {
+		User obj = service.findById(id);
+		List<NoteDTO> list = new ArrayList<>();
+		list = obj.getNotes()
+				.stream()
+				.map(x -> new NoteDTO(x, x.getCategory(), x.getAuthor())).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
 	}
 	
 }
