@@ -1,6 +1,8 @@
 package com.torres.notesapi.dto;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.torres.notesapi.entities.Category;
 
@@ -45,6 +47,10 @@ public class CategoryDTO implements Serializable {
 
 	public void setAuthor(AuthorDTO author) {
 		this.author = author;
+	}
+	
+	public static List<CategoryDTO> convertToListDTO(List<Category> list) {
+		return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 	}
 	
 }

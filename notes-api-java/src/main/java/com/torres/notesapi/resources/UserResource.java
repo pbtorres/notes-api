@@ -1,8 +1,6 @@
 package com.torres.notesapi.resources;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.torres.notesapi.dto.CategoryDTO;
-import com.torres.notesapi.dto.NoteDTO;
 import com.torres.notesapi.dto.UserDTO;
 import com.torres.notesapi.entities.User;
 import com.torres.notesapi.services.UserService;
@@ -27,34 +23,14 @@ public class UserResource {
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> list = service.findAll();
-		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
+		List<UserDTO> listDTO = UserDTO.convertToListDTO(list);
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(new UserDTO(obj));
-	}
-	
-	@GetMapping(value="/{id}/notes")
-	public ResponseEntity<List<NoteDTO>> findNotes(@PathVariable String id) {
-		User obj = service.findById(id);
-		List<NoteDTO> list = new ArrayList<>();
-		list = obj.getNotes()
-				.stream()
-				.map(x -> new NoteDTO(x, x.getCategory(), x.getAuthor())).collect(Collectors.toList());
-		return ResponseEntity.ok().body(list);
-	}
-	
-	@GetMapping(value="/{id}/categories")
-	public ResponseEntity<List<CategoryDTO>> findCategories(@PathVariable String id) {
-		User obj = service.findById(id);
-		List<CategoryDTO> list = new ArrayList<>();
-		list = obj.getCategories()
-				.stream()
-				.map(x -> new CategoryDTO(x)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(list);
 	}
 	
 }

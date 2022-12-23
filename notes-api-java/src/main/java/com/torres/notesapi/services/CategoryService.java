@@ -41,6 +41,14 @@ public class CategoryService {
 		repo.deleteById(id);
 	}
 	
+	public List<Category> findByUserId(String userId) {
+		return repo.findByUserId(userId);
+	}
+	
+	public List<Category> findByName(String name) {
+		return repo.findByName(name);
+	}
+	
 	public void updateData(Category newObj, Category obj) {
 		newObj.setName(obj.getName());
 	}

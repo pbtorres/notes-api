@@ -26,7 +26,10 @@ public class UserDTO implements Serializable {
 		id = obj.getId();
 		name = obj.getName();
 		email = obj.getEmail();
-	
+		
+		categories = obj.getCategories()
+				.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+		
 		notes = obj.getNotes()
 				.stream()
 				.map(x -> new NoteDTO(x, x.getCategory(), x.getAuthor())).collect(Collectors.toList());
@@ -70,6 +73,10 @@ public class UserDTO implements Serializable {
 
 	public void setNotes(List<NoteDTO> notes) {
 		this.notes = notes;
+	}
+	
+	public static List<UserDTO> convertToListDTO(List<User> list) {
+		return list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 	}
 
 }

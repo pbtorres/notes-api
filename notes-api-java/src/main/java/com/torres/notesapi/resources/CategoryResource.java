@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,9 +28,10 @@ public class CategoryResource {
 	private CategoryService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<CategoryDTO> listDTO = CategoryDTO.convertToListDTO(list);
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@GetMapping(value="/{id}")
@@ -56,9 +58,23 @@ public class CategoryResource {
 	}
 	
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<Void> deletById(@PathVariable String id){
+	public ResponseEntity<Void> deletById(@PathVariable String id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value="/find_by_user_id")
+	public ResponseEntity<List<CategoryDTO>> findByUserId(@RequestParam(value="user_id") String userId) {
+		List<Category> list = service.findByUserId(userId);
+		List<CategoryDTO> listDTO = CategoryDTO.convertToListDTO(list);
+		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	@GetMapping(value="/find_by_name")
+	public ResponseEntity<List<CategoryDTO>> findByName(@RequestParam(value="name") String name) {
+		List<Category> list = service.findByName(name);
+		List<CategoryDTO> listDTO = CategoryDTO.convertToListDTO(list);
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 }
