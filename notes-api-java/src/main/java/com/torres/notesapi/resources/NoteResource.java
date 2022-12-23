@@ -25,26 +25,28 @@ public class NoteResource {
 	private NoteService service;
 		
 	@GetMapping
-	public ResponseEntity<List<Note>> findAll() {
+	public ResponseEntity<List<NoteDTO>> findAll() {
 		List<Note> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(NoteDTO.convertToListDTO(list));
 	}
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<Note> findById(@PathVariable String id) {
+	public ResponseEntity<NoteDTO> findById(@PathVariable String id) {
 		Note obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(new NoteDTO(obj, obj.getCategory(), obj.getAuthor()));
 	}
 	
 	@GetMapping(value="/find_by_user_id")
-	public ResponseEntity<List<Note>> findByUserId(@RequestParam(value="user_id") @PathVariable String userId) {
-		return ResponseEntity.ok().body(service.findByUserId(userId));
+	public ResponseEntity<List<NoteDTO>> findByUserId(@RequestParam(value="user_id") @PathVariable String userId) {
+		List<Note> list = service.findByUserId(userId);
+		return ResponseEntity.ok().body(NoteDTO.convertToListDTO(list));
 	}
 	
 	@GetMapping(value="/full_search")
-	public ResponseEntity<List<Note>> fullSearch(@RequestParam(value="text", defaultValue="") String text) {
+	public ResponseEntity<List<NoteDTO>> fullSearch(@RequestParam(value="text", defaultValue="") String text) {
 		text = URL.decodeParam(text);	
-		return ResponseEntity.ok().body(service.fullSearch(text));
+		List<Note> list = service.fullSearch(text);
+		return ResponseEntity.ok().body(NoteDTO.convertToListDTO(list));
 	}
 	
 	@PutMapping(value="/{id}")
